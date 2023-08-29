@@ -399,7 +399,7 @@ void plat_munmap(void *ptr, size_t size)
    free(ptr);
 }
 
-#elif EMULATORJS
+#elif defined(EMULATORJS)
 
 void *plat_mmap(unsigned long addr, size_t size, int need_exec, int is_fixed)
 {

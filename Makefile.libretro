@@ -433,7 +433,7 @@ else ifeq ($(platform), emscripten)
 	ARCH = unknown
 
 	STATIC_LINKING = 1
-	CFLAGS += -DEMULATORJS=1
+	CFLAGS += -DEMULATORJS
 
 # RS90
 else ifeq ($(platform), rs90)
