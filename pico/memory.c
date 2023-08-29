@@ -38,10 +38,10 @@ static void xmap_set(uptr *map, int shift, u32 start_addr, u32 end_addr,
     return;
   }
 
-  if (addr & 1) {
-    elprintf(EL_STATUS|EL_ANOMALY, "xmap_set: ptr is not aligned: %08lx", addr);
-    return;
-  }
+//  if (addr & 1) {
+//    elprintf(EL_STATUS|EL_ANOMALY, "xmap_set: ptr is not aligned: %08lx", addr);
+//    return;
+//  }
 
   if (!is_func)
     addr -= start_addr;
