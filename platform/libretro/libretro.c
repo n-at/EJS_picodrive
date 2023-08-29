@@ -401,10 +401,28 @@ void plat_munmap(void *ptr, size_t size)
 
 #elif defined(EMULATORJS)
 
+void *__ems_malloc(size_t size)
+{
+    void *ptr;
+    ptr = malloc(size + 2);
+    if ((unsigned long)ptr & 1) {
+        ((char*)ptr)[0] = 127;
+        ptr++;
+    }
+    return ptr;
+}
+
+void __ems_free(void *ptr)
+{
+    if (((char*)ptr)[-1] == 127) {
+        ptr--;
+    }
+    free(ptr);
+}
+
 void *plat_mmap(unsigned long addr, size_t size, int need_exec, int is_fixed)
 {
     void *ptr;
-    unsigned long addr;
     ptr = __ems_malloc(size);
     if (ptr == NULL) {
         log_cb(RETRO_LOG_ERROR, "mmap(%08lx, %zd) NULL\n", addr, size);
@@ -449,25 +467,6 @@ void plat_munmap(void *ptr, size_t size)
 {
     log_cb(RETRO_LOG_INFO, "munmap(%p, %zd)\n", ptr, size);
     __ems_free(ptr);
-}
-
-void *__ems_malloc(size)
-{
-    void *ptr;
-    ptr = malloc(size + 2);
-    if ((unsigned long)ptr & 1) {
-        ((char*)ptr)[0] = 127;
-        ptr++;
-    }
-    return ptr;
-}
-
-void __ems_free(void *ptr)
-{
-    if (((char*)ptr)[-1] == 127) {
-        ptr--;
-    }
-    free(ptr);
 }
 
 #else
