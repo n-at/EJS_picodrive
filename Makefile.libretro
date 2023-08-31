@@ -434,6 +434,8 @@ else ifeq ($(platform), emscripten)
 
 	STATIC_LINKING = 1
 	CFLAGS += -DEMULATORJS
+    HAVE_THREADS = 0
+    NO_GCC = 0
 
 # RS90
 else ifeq ($(platform), rs90)
